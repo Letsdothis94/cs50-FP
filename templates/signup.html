@@ -7,6 +7,9 @@
 {% block main %}
 <h1>Sign Up</h1>
 <h3>Enter your login credentials</h3>
+{% if error %}
+    <p>{{ error }}</p>
+{% endif %}
 <form action="/signup" method="post">
     <label for="first">Username:</label>
     <input type="text" id="first" name="username" placeholder="Enter your Username" required><br />
