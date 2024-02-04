@@ -16,8 +16,20 @@ def index():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    return render_template("login.html")
-
+    session.clear()
+    if request.method == "POST":
+        username = request.form.get("username")
+        password = request.form.get("password")
+        if not username or not password:
+            return render_template("login.html", error="Enter username and password")
+        data = db.execute("SELECT * FROM users WHERE username =?", username)
+        if not data or not check_password_hash(data[0]["hash"], password):
+            return render_template("login.html", error="User not found")
+        session["user_id"] = data[0]["id"]
+        return redirect("/")
+    else:
+        return render_template("login.html")
+        
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
     session.clear()
