@@ -6,6 +6,20 @@
 
 {% block main %}
     <h2>Profile Page</h2>
+    <div>
+        <h2>Your Posts</h2>
+        {% for post in posts %}
+        <div>
+            <h6>Content: {{ post.content }}</h6>
+            <p>User: {{ post.user_id }}</p>
+            <p>Date: {{ post.created_at }}</p>
+            <p>Likes: {{ post.likes }}</p>
+            <button>Delete Post</button>
+        </div>
+        {% else %}
+            <p>Post not found</p>
+        {% endfor %}
+    </div>
     <button id="logOutBtn"><a href="/logout">Log out</a></button>
 
 {% endblock %}

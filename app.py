@@ -80,12 +80,15 @@ def make_post():
     
 @app.route("/profile")
 def profile():
-    return render_template("profile.html")
+    user_id = session.get('user_id')
+    posts = db.execute("SELECT * FROM posts WHERE user_id = ?", user_id)
+    return render_template("profile.html", posts=posts)
 
 @app.route("/logout")
 def logout():
     session.clear()
-    return redirect("/login")
+    redirect("/")
+    return render_template("login.html")
 
 
 if __name__ == '__main__':
