@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, redirect
+from flask import Flask, render_template, request, session, redirect, jsonify
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 from cs50 import SQL
@@ -12,7 +12,8 @@ db = SQL("sqlite:///database.db")
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    data = db.execute("SELECT * FROM posts")
+    return render_template("index.html", data=data)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -52,6 +53,27 @@ def signup():
         return redirect("/login")
     else:
         return render_template("signup.html")
+    
+@app.route("/post", methods=["GET", "POST"])
+def make_post():
+    if request.method == "POST":
+        content = request.form.get("post")
+        user_id = session.get('user_id')
+        if not content or user_id is None:
+            return render_template("post.html", error="Please enter the content of your post")
+        db.execute("INSERT INTO posts (content, user_id) VALUES (?, ?)", content, user_id)
+        return render_template("/index.html")
+    else:
+        return render_template("post.html")
+    
+@app.route("/profile")
+def profile():
+    return render_template("profile.html")
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect("/")
 
 
 if __name__ == '__main__':

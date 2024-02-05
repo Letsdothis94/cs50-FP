@@ -6,6 +6,14 @@
 
 {% block main %}
 
-    <h1>MAIN</h1>
+    <h1>Home Page</h1>
+    {% for post in data %}
+        <div>
+            <h6>Content: {{ post.content }}</h6>
+            <p>User: {{ post.user_id }}</p>
+            <p>Date: {{ post.created_at }}</p>
+            <p>Likes: {{ post.likes }}</p>
+        </div>
+    {% endfor %}
     
 {% endblock %}

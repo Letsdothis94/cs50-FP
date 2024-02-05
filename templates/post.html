@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Create Post
+{% endblock %}
+
+{% block main %}
+    <h1>Create a new post</h1>
+    {% if error %}
+        <p>{{ error }}</p>
+    {% endif %}
+    {% if error %}
+    <p>{{ error }}</p>
+    {% endif %}
+    <form action="/post" method="post">
+        <label for="post">Post:</label><br />
+        <input type="text" id="post" name="post" placeholder="Share what you have in mind..." required><br />
+        <div class="wrap">
+            <button type="submit">Post</button>
+        </div>
+    </form>
+{% endblock %}
