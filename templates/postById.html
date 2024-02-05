@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Index
+{% endblock %}
+
+{% block main %}
+
+    <h1>Post By Id</h1>
+    {% for post in post %}
+    <div>
+        <h6>Content: {{ post.content }}</h6>
+        <p>User: {{ post.user_id }}</p>
+        <p>Date: {{ post.created_at }}</p>
+        <p>Likes: {{ post.likes }}</p>
+    </div>
+    {% else %}
+        <p>Post not found</p>
+    {% endfor %}
+
+{% endblock %}

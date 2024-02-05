@@ -15,6 +15,18 @@ def index():
     data = db.execute("SELECT * FROM posts")
     return render_template("index.html", data=data)
 
+@app.route("/post/<int:post_id>", methods=["GET"])
+def view_post(post_id):
+    post = db.execute("SELECT * FROM posts WHERE post_id = :post_id", post_id=post_id)
+    return render_template("postById.html", post=post)
+
+# @app.route("/post/<int:post_id>", methods=["GET"])
+# def post_by_id(post_id):
+#     data = db.execute("SELECT * FROM posts WHERE post_id = :post_id", post_id=post_id)
+#     return render_template("postId.html", data=data)
+
+
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     session.clear()
@@ -73,7 +85,7 @@ def profile():
 @app.route("/logout")
 def logout():
     session.clear()
-    return redirect("/")
+    return redirect("/login")
 
 
 if __name__ == '__main__':
