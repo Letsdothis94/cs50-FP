@@ -79,6 +79,20 @@ def make_post():
     else:
         return render_template("post.html")
     
+@app.route("/like", methods=["POST"])
+def like_post():
+    if request.method == "POST":
+        post_id = request.form.get("post_id")
+        action = request.form.get("action")
+        if action == "like":
+            db.execute("UPDATE posts SET likes = (likes + 1) WHERE post_id = ?", post_id)
+            return redirect("/")  
+        elif action == "dislike":
+            db.execute("UPDATE posts SET likes = (likes - 1) WHERE post_id = ?", post_id)
+            return redirect("/")  
+    else:
+        return redirect("/")
+    
 @app.route("/profile")
 def profile():
     user_id = session.get('user_id')

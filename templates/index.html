@@ -17,10 +17,11 @@
             <p><strong>Date:</strong> {{ post.created_at }}</p>
             <p><strong>Likes:</strong> {{ post.likes }}</p>
         </div>
-        <div>
-            <button>🔼</button>
-            <button>🔽</button>
-        </div>
+        <form action="/like" method="post">
+            <input type="hidden" name="post_id" value="{{ post.post_id }}">
+            <button type="submit" name="action" value="like">🔼</button>
+            <button type="submit" name="action" value="dislike">🔽</button>
+        </form>
     </div>
     {% endfor %}
     
