@@ -8,8 +8,9 @@
 
     <h1>Post By Id</h1>
     {% for post in post %}
-    <div>
-        <h6>Content: {{ post.content }}</h6>
+    <div class="description">
+        <h2>Title: {{ post.title }}</h2>
+        <p>Content: {{ post.content }}</p>
         <p>User: {{ post.user_id }}</p>
         <p>Date: {{ post.created_at }}</p>
         <p>Likes: {{ post.likes }}</p>

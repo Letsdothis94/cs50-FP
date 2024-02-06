@@ -12,7 +12,7 @@ db = SQL("sqlite:///database.db")
 
 @app.route("/")
 def index():
-    data = db.execute("SELECT * FROM posts")
+    data = db.execute("SELECT * FROM posts ORDER BY created_at DESC")
     return render_template("index.html", data=data)
 
 @app.route("/post/<int:post_id>", methods=["GET"])
@@ -20,10 +20,10 @@ def view_post(post_id):
     post = db.execute("SELECT * FROM posts WHERE post_id = :post_id", post_id=post_id)
     return render_template("postById.html", post=post)
 
-# @app.route("/post/<int:post_id>", methods=["GET"])
-# def post_by_id(post_id):
-#     data = db.execute("SELECT * FROM posts WHERE post_id = :post_id", post_id=post_id)
-#     return render_template("postId.html", data=data)
+@app.route("/delete/<int:post_id>", methods=["POST"])
+def delete_post(post_id):
+    db.execute("DELETE FROM posts WHERE post_id = :post_id", post_id=post_id)
+    return redirect("/profile")
 
 
 
@@ -69,20 +69,22 @@ def signup():
 @app.route("/post", methods=["GET", "POST"])
 def make_post():
     if request.method == "POST":
+        title = request.form.get("postTitle")
         content = request.form.get("post")
         user_id = session.get('user_id')
         if not content or user_id is None:
             return render_template("post.html", error="Please enter the content of your post")
-        db.execute("INSERT INTO posts (content, user_id) VALUES (?, ?)", content, user_id)
-        return render_template("/index.html")
+        db.execute("INSERT INTO posts (title, content, user_id) VALUES (?, ?, ?)", title, content, user_id)
+        return redirect("/")
     else:
         return render_template("post.html")
     
 @app.route("/profile")
 def profile():
     user_id = session.get('user_id')
-    posts = db.execute("SELECT * FROM posts WHERE user_id = ?", user_id)
-    return render_template("profile.html", posts=posts)
+    posts = db.execute("SELECT * FROM posts WHERE user_id = ? ORDER BY created_at DESC", user_id)
+    user = db.execute("SELECT * FROM users WHERE id = ? LIMIT 1", session.get('user_id'))
+    return render_template("profile.html", posts=posts, user=user)
 
 @app.route("/logout")
 def logout():

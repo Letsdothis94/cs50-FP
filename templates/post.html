@@ -13,6 +13,8 @@
     <p>{{ error }}</p>
     {% endif %}
     <form action="/post" method="post">
+        <label for="postTitle">Title:</label><br />
+        <input type="text" id="postTitle" name="postTitle" placeholder="Title of your post?" required><br />
         <label for="post">Post:</label><br />
         <input type="text" id="post" name="post" placeholder="Share what you have in mind..." required><br />
         <div class="wrap">

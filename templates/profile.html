@@ -6,18 +6,23 @@
 
 {% block main %}
     <h2>Profile Page</h2>
+    <h3>{{ user[0]['username'] }}</h3>
     <div>
         <h2>Your Posts</h2>
         {% for post in posts %}
         <div>
+            <h5>Title: {{ post.title }}</h5>
             <h6>Content: {{ post.content }}</h6>
             <p>User: {{ post.user_id }}</p>
             <p>Date: {{ post.created_at }}</p>
             <p>Likes: {{ post.likes }}</p>
-            <button>Delete Post</button>
+            <form action="{{ url_for('delete_post', post_id=post.post_id) }}" method="post">
+                <button type="submit">Delete Post</button>
+            </form>
         </div>
         {% else %}
             <p>Post not found</p>
+            <p><a href="/post">Create a post?</a></p>
         {% endfor %}
     </div>
     <button id="logOutBtn"><a href="/logout">Log out</a></button>

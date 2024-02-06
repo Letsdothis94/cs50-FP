@@ -8,8 +8,9 @@
 
     <h1>Home Page</h1>
     {% for post in data %}
-        <div>
-            <h6>Content: <a href="{{ url_for('view_post', post_id=post.post_id) }}">{{ post.content }}</a></h6>
+        <div class="description">
+            <h2>Title: <a href="{{ url_for('view_post', post_id=post.post_id) }}">{{ post.title }}</a></h2>
+            <p>Content: {{ post.content }}</p>
             <p>User: {{ post.user_id }}</p>
             <p>Date: {{ post.created_at }}</p>
             <p>Likes: {{ post.likes }}</p>
