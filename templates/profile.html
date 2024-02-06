@@ -5,26 +5,33 @@
 {% endblock %}
 
 {% block main %}
-    <h2>Profile Page</h2>
-    <h3>{{ user[0]['username'] }}</h3>
+<div class="loginMain">
+
+    <h1>Profile Page</h1>
+    <div class="profileUserInfo">
+        <h3>{{ user[0]['username'] }}</h3>
+        <button id="logOutBtn"><a href="/logout">Log out</a></button>
+    </div>
     <div>
-        <h2>Your Posts</h2>
+        <h2 class="postsH2">Your Posts</h2>
         {% for post in posts %}
-        <div>
-            <h5>Title: {{ post.title }}</h5>
-            <h6>Content: {{ post.content }}</h6>
-            <p>User: {{ post.user_id }}</p>
-            <p>Date: {{ post.created_at }}</p>
-            <p>Likes: {{ post.likes }}</p>
+        <div class="description">
+            <h2>{{ post.title }}</h2>
+            <p><strong>Content:</strong> {{ post.content }}</p>
+            <p><strong>User:</strong> {{ post.user_id }}</p>
+            <div>
+                <p><strong>Date:</strong> {{ post.created_at }}</p>
+                <p><strong>Likes:</strong> {{ post.likes }}</p>
+            </div>
             <form action="{{ url_for('delete_post', post_id=post.post_id) }}" method="post">
-                <button type="submit">Delete Post</button>
+                <button type="submit" class="deleteBtn">Delete Post</button>
             </form>
         </div>
         {% else %}
-            <p>Post not found</p>
-            <p><a href="/post">Create a post?</a></p>
+        <p>Post not found</p>
+        <p><a href="/post">Create a post?</a></p>
         {% endfor %}
     </div>
-    <button id="logOutBtn"><a href="/logout">Log out</a></button>
-
+    
+</div>
 {% endblock %}

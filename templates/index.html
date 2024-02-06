@@ -5,18 +5,24 @@
 {% endblock %}
 
 {% block main %}
+<div class="loginMain">
 
     <h1>Home Page</h1>
     {% for post in data %}
-        <div class="description">
-            <h2>Title: <a href="{{ url_for('view_post', post_id=post.post_id) }}">{{ post.title }}</a></h2>
-            <p>Content: {{ post.content }}</p>
-            <p>User: {{ post.user_id }}</p>
-            <p>Date: {{ post.created_at }}</p>
-            <p>Likes: {{ post.likes }}</p>
+    <div class="description">
+        <h2>Title: <a href="{{ url_for('view_post', post_id=post.post_id) }}">{{ post.title }}</a></h2>
+        <p><strong>Content:</strong> {{ post.content }}</p>
+        <p><strong>User:</strong> {{ post.user_id }}</p>
+        <div>
+            <p><strong>Date:</strong> {{ post.created_at }}</p>
+            <p><strong>Likes:</strong> {{ post.likes }}</p>
+        </div>
+        <div>
             <button>🔼</button>
             <button>🔽</button>
         </div>
+    </div>
     {% endfor %}
     
+</div>
 {% endblock %}

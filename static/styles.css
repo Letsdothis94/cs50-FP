@@ -66,7 +66,7 @@ nav .navbar .logo {
     position: relative;
 }
 
-.loginMain h1, h2 {
+.loginMain h1, h2, h3 {
     text-align: center;
 }
 
@@ -121,12 +121,132 @@ nav .navbar .logo {
     font-size: 18px;
 }
 
-
-
+/* Post Card */
 .description {
     padding: 1rem;
     margin: 1rem auto;
     box-shadow: 0 3px 7px -1px(#000, .1);
     background-color: #fff;
     border-radius: 5px;
+    max-width: 1200px;
 }
+
+.description a {
+    color: #2980b9;
+    text-decoration: none;
+}
+
+.description a:hover {
+    text-decoration: underline;
+}
+
+.description a:visited {
+    color: #2980b9;
+}
+
+.description p {
+    font-size: 20px;
+}
+
+.deleteBtn {
+    cursor: pointer;
+    color: #fff;
+    font-size: 16px;
+    border: 0;
+    background-color: rgba(244, 91, 105, 1);
+    padding: 8px 0;
+    width: 15%;
+}
+
+.deleteBtn:hover {
+    border-radius: 5px;
+    background-color: rgb(177, 44, 55);
+}
+
+/* Profile Page */
+.profileUserInfo {
+    display: flex;
+    justify-content: space-between;
+    margin: auto;
+    width: 95%;
+    background-color: #fff;
+    padding: 1rem;
+    box-shadow: 0 3px 7px -1px(#000, .1);
+}
+
+.postsH2 {
+    color: green;
+}
+
+.profileUserInfo button {
+    cursor: pointer;
+    color: #fff;
+    font-size: 18px;
+    text-transform: uppercase;
+    width: 20%;
+    border: 0;
+    padding: 10px 0;
+    margin-top: 10px;
+    margin-left: -5px;
+    border-radius: 5px;
+    background-color: #2980b9;
+}
+
+.profileUserInfo button a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.profileUserInfo button:hover {
+    background-color: #297fb97f;
+}
+
+/* Post Form */
+.postForm {
+    padding: 40px 30px 30px 30px;
+    background-color: #fff;
+    border-radius: 10px;
+    margin: auto;
+    width: 80%;
+    box-shadow: 5px 10px 10px rgb(2, 128, 144, 1), 0.1;
+    max-width: 1200px;
+}
+
+.postForm label {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.postForm input {
+    display: block;
+    border-radius: 5px;
+    font-size: 18px;
+    background: #f1f1f1;
+    width: 100%;
+    border: 0;
+    padding: 10px 10px;
+    margin: 15px -10px;
+}
+
+.postWrap {
+    display: flex;
+    justify-content: center;
+}
+
+.postForm button {
+    cursor: pointer;
+    background-color: #2980b9;
+    color: #fff;
+    font-size: 18px;
+    width: 40%;
+    border: 0;
+    padding: 10px 0;
+    margin-top: 10px;
+    margin-left: -5px;
+    border-radius: 5px;
+}
+
+.postForm button:hover {
+    background-color: #297fb97f;
+}
+

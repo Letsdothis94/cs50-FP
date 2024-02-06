@@ -5,20 +5,24 @@
 {% endblock %}
 
 {% block main %}
+<div class="loginMain">
+
     <h1>Create a new post</h1>
     {% if error %}
-        <p>{{ error }}</p>
+    <p>{{ error }}</p>
     {% endif %}
     {% if error %}
     <p>{{ error }}</p>
     {% endif %}
-    <form action="/post" method="post">
+    <form action="/post" method="post" class="postForm">
         <label for="postTitle">Title:</label><br />
         <input type="text" id="postTitle" name="postTitle" placeholder="Title of your post?" required><br />
         <label for="post">Post:</label><br />
         <input type="text" id="post" name="post" placeholder="Share what you have in mind..." required><br />
-        <div class="wrap">
+        <div class="wrap postWrap">
             <button type="submit">Post</button>
         </div>
     </form>
+
+</div>
 {% endblock %}
