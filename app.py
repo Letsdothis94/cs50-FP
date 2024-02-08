@@ -78,21 +78,86 @@ def make_post():
         return redirect("/")
     else:
         return render_template("post.html")
-    
+
 @app.route("/like", methods=["POST"])
 def like_post():
     if request.method == "POST":
         post_id = request.form.get("post_id")
+        user_id = session.get("user_id")
         action = request.form.get("action")
+
         if action == "like":
-            db.execute("UPDATE posts SET likes = (likes + 1) WHERE post_id = ?", post_id)
-            return redirect("/")  
+            print('post id: ', post_id,'user id: ', user_id,'action: ', action)
+            liked = db.execute("SELECT * FROM likes WHERE user_id = ? AND post_id = ?", user_id, post_id)
+            if len(liked) != 0:
+                print("Previously liked:", liked)
+                # return redirect("/")
+            else:
+                db.execute("DELETE FROM dislikes WHERE post_id = ? AND user_id = ?", post_id, user_id)
+                disliked = db.execute("SELECT * FROM dislikes WHERE user_id = ? AND post_id = ?", user_id, post_id)
+                if len(disliked) == 0:
+                    db.execute("UPDATE posts SET likes = (likes + 1) WHERE post_id = ?", post_id)
+                    db.execute("INSERT INTO likes (post_id, user_id) VALUES (?, ?)", post_id, user_id)
+                    return redirect("/")
+                
         elif action == "dislike":
-            db.execute("UPDATE posts SET likes = (likes - 1) WHERE post_id = ?", post_id)
-            return redirect("/")  
-    else:
-        return redirect("/")
-    
+            print('post id: ', post_id,'user id: ', user_id,'action: ', action)
+            disliked = db.execute("SELECT * FROM dislikes WHERE user_id = ? AND post_id = ?", user_id, post_id)
+            if len(disliked) != 0:
+                print("Previously disliked", disliked)
+                # return redirect("/")
+            else:
+                db.execute("DELETE FROM likes WHERE user_id = ? AND post_id = ?", user_id, post_id)
+                liked = db.execute("SELECT * FROM likes WHERE user_id = ? AND post_id = ?", user_id, post_id)
+                if len(liked) == 0:
+                    db.execute("UPDATE posts SET likes = (likes - 1) WHERE post_id = ?", post_id)
+                    db.execute("INSERT INTO dislikes (user_id, post_id) VALUES(?, ?)", user_id, post_id)
+                    return redirect("/")
+                
+    data = db.execute("SELECT * FROM posts ORDER BY created_at DESC")
+    return render_template("index.html", data=data)    
+
+
+# @app.route("/like", methods=["POST"])
+# def like_post():
+#     if request.method == "POST":
+#         post_id = request.form.get("post_id")
+#         user_id = session.get('user_id')
+#         action = request.form.get("action")
+
+#         if action == "like":
+#             print("like")
+#             liked = db.execute("SELECT * FROM likes WHERE post_id = ? AND user_id = ?", 
+#                                post_id, user_id)
+#             if liked:
+#                 return redirect("/")
+#             else:
+#                 disliked = db.execute("SELECT * FROM dislikes WHERE post_id = ? AND user_id = ?", post_id, user_id)
+#                 if disliked:
+#                     db.execute("DELETE FROM dislikes WHERE post_id = ? AND user_id = ?", post_id, user_id)
+#                     db.execute("UPDATE posts SET likes = (likes + 1) WHERE post_id = ?", post_id)
+#                 else:
+#                     db.execute("INSERT INTO likes (post_id, user_id) VALUES (?, ?)", post_id, user_id)
+#                     db.execute("UPDATE posts SET likes = (likes + 1) WHERE post_id = ?", post_id)
+#                 return redirect("/")  
+        
+#         if action == "dislike":
+#             print("Dislike")
+#             disliked = db.execute("SELECT * FROM dislikes WHERE post_id = ? AND user_id = ?", post_id, user_id)
+#             if disliked:
+#                 return redirect("/")
+#             else:
+#                 liked = db.execute("SELECT * FROM likes WHERE post_id = ? AND user_id = ?", post_id, user_id)
+#                 if liked:
+#                     db.execute("DELETE FROM likes WHERE post_id = ? AND user_id = ?", post_id, user_id)
+#                     db.execute("UPDATE posts SET likes = (likes - 1) WHERE post_id = ?", post_id)
+#                 else:
+#                     db.execute("INSERT INTO dislikes (post_id, user_id) VALUES (?, ?)", post_id, user_id)
+#                     db.execute("UPDATE posts SET likes = (likes - 1) WHERE post_id = ?", post_id)   
+#                 return redirect("/")  
+#     else:
+#         return redirect("/")
+
 @app.route("/profile")
 def profile():
     user_id = session.get('user_id')
