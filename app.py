@@ -69,6 +69,7 @@ def signup():
         return render_template("signup.html")
     
 @app.route("/post", methods=["GET", "POST"])
+@login_required
 def make_post():
     if request.method == "POST":
         title = request.form.get("postTitle")
@@ -82,6 +83,7 @@ def make_post():
         return render_template("post.html")
 
 @app.route("/like", methods=["POST"])
+@login_required
 def like_post():
     if request.method == "POST":
         post_id = request.form.get("post_id")
@@ -161,6 +163,7 @@ def like_post():
 #         return redirect("/")
 
 @app.route("/profile")
+@login_required
 def profile():
     user_id = session.get('user_id')
     posts = db.execute("SELECT * FROM posts WHERE user_id = ? ORDER BY created_at DESC", user_id)
