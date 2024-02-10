@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, session, redirect, jsonify
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 from cs50 import SQL
+from helpers import login_required
 
 app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
@@ -11,6 +12,7 @@ Session(app)
 db = SQL("sqlite:///database.db")
 
 @app.route("/")
+@login_required
 def index():
     data = db.execute("SELECT * FROM posts ORDER BY created_at DESC")
     return render_template("index.html", data=data)
