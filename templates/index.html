@@ -11,7 +11,7 @@
     {% for post in data %}
     <div class="description">
         <h2>Title: <a href="{{ url_for('view_post', post_id=post.post_id) }}">{{ post.title }}</a></h2>
-        <p><strong>Content:</strong> {{ post.content }}</p>
+        <p class="contentP">{{ post.content }}</p>
         <p><strong>User:</strong> {{ post.user_id }}</p>
         <div>
             <p><strong>Date:</strong> {{ post.created_at }}</p>
@@ -34,6 +34,13 @@
             e.preventDefault();
         })
     }
+
+    let content = document.getElementsByClassName('contentP');
+    [...content].forEach(element => {
+        if (element.textContent.length > 150) {
+            element.textContent = element.textContent.substring(0, 150) + '...';
+        }
+    });
 </script>
 
 {% endblock %}

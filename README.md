@@ -23,5 +23,4 @@ By clicking on a single post title, you will be redirected to another screen whe
     2. flask run
 
 ### Contact
-Cristian Contreras - contreras.cristian@gmail.com
-
+Cristian Contreras - contreras.cristian994@gmail.com
