@@ -121,6 +121,15 @@ nav .navbar .logo {
     font-size: 18px;
 }
 
+/* Error message */
+#error-msg {
+    color: red;
+    justify-content: center;
+    text-align: center;
+    font-size: 20px;
+    text-decoration: underline;
+}
+
 /* Post Card */
 .description {
     padding: 1rem;
@@ -199,6 +208,35 @@ nav .navbar .logo {
 
 .profileUserInfo button:hover {
     background-color: #297fb97f;
+}
+
+/* not-found-message profile  */
+#not-found-container {
+    text-align: center;
+    background-color: #fff;
+    padding: 1rem;
+    margin: 1rem auto;
+    box-shadow: 0 3px 7px -1px(#000, .1);
+    border-radius: 5px;
+    max-width: 1200px;
+}
+
+#not-found-container {
+    font-size: 22px;
+    font-weight: 600;
+}
+
+#not-found-container a {
+    color: #2980b9;
+    text-decoration: none;
+}
+
+#not-found-container a:hover {
+    text-decoration: underline;
+}
+
+#not-found-container a:visited {
+    color: #2980b9;
 }
 
 /* Post Form */

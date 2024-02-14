@@ -19,13 +19,19 @@ def index():
 
 @app.route("/post/<int:post_id>", methods=["GET"])
 def view_post(post_id):
+    user = db.execute("SELECT username FROM users WHERE id = :post_id", post_id=post_id)
     post = db.execute("SELECT * FROM posts WHERE post_id = :post_id", post_id=post_id)
-    return render_template("postById.html", post=post)
+    return render_template("postById.html", post=post, user=user)
 
-@app.route("/delete/<int:post_id>", methods=["POST"])
+@app.route("/delete/<int:post_id>", methods=["GET", "POST"])
 def delete_post(post_id):
-    db.execute("DELETE FROM posts WHERE post_id = :post_id", post_id=post_id)
-    return redirect("/profile")
+    if request.method == "POST":
+        db.execute("DELETE FROM likes WHERE post_id = :post_id", post_id=post_id)
+        db.execute("DELETE FROM dislikes WHERE post_id = :post_id", post_id=post_id)
+        db.execute("DELETE FROM posts WHERE post_id = :post_id AND user_id = :user_id", post_id=post_id, user_id=session.get('user_id'))
+        return redirect("/profile")
+    else:       
+        return render_template("profile.html", error="Couldn't delete post")
 
 
 

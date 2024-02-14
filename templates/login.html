@@ -9,7 +9,7 @@
         <h1>Sign In</h1>
         <h2>Enter your login credentials</h2>
         {% if error %}
-            <p>{{ error }}</p>
+            <p id="error-msg">{{ error }}</p>
         {% endif %}
         <form action="/login" method="post" class="login">
             <label for="first">Username:</label>

@@ -14,6 +14,9 @@
     </div>
     <div>
         <h2 class="postsH2">Your Posts</h2>
+        {% if error %}
+            <p>{{error}}</p>
+        {% endif %}
         {% for post in posts %}
         <div class="description">
             <h2>{{ post.title }}</h2>
@@ -28,8 +31,10 @@
             </form>
         </div>
         {% else %}
-        <p>Post not found</p>
-        <p><a href="/post">Create a post?</a></p>
+        <div id="not-found-container">
+            <p id="not-found">Post not found</p>
+            <p><a href="/post">Create a post?</a></p>
+        </div>
         {% endfor %}
     </div>
     
